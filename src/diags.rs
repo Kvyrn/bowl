@@ -6,7 +6,7 @@ use bevy::{
 };
 
 const UPDATE_INTERVAL: Duration = Duration::from_millis(500);
-const FONT_SIZE: f32 = 10.0;
+const FONT_SIZE: f32 = 20.0;
 
 pub struct DiagsPlugin;
 
@@ -64,11 +64,14 @@ fn setup_diags(mut commands: Commands, asset_server: Res<AssetServer>) {
         font_size: FONT_SIZE,
         color: Color::ALICE_BLUE,
     };
-    commands.spawn((
-        TextBundle::from_sections([
-            TextSection::new("FPS: ", style.clone()),
-            TextSection::new("...", style),
-        ]),
-        DiagsText,
-    ));
+    commands
+        .spawn((
+            TextBundle::from_sections([
+                TextSection::new("FPS: ", style.clone()),
+                TextSection::new("...", style),
+            ]),
+            DiagsText,
+        ))
+        // Override visibility
+        .insert(Visibility::Hidden);
 }

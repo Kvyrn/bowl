@@ -1,7 +1,7 @@
 mod diags;
 
 use bevy::prelude::*;
-use diags::DiagsPlugin;
+use diags::{DiagsPlugin, DiagsText};
 
 fn main() {
     App::new()
@@ -9,6 +9,7 @@ fn main() {
         .add_plugin(DiagsPlugin)
         .add_startup_system(setup)
         .add_system(rotate)
+        .add_system(toggle_diags)
         .run();
 }
 
@@ -48,5 +49,17 @@ fn setup(
 fn rotate(mut query: Query<&mut Transform, With<Shape>>) {
     for mut transform in query.iter_mut() {
         transform.rotation *= Quat::from_rotation_y(0.01);
+    }
+}
+
+fn toggle_diags(mut query: Query<&mut Visibility, With<DiagsText>>, input: Res<Input<KeyCode>>) {
+    if input.just_pressed(KeyCode::F9) {
+        for mut visibility in query.iter_mut() {
+            if matches!(*visibility, Visibility::Hidden) {
+                *visibility = Visibility::Inherited;
+            } else {
+                *visibility = Visibility::Hidden;
+            }
+        }
     }
 }
