@@ -1,8 +1,12 @@
+mod diags;
+
 use bevy::prelude::*;
+use diags::DiagsPlugin;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugin(DiagsPlugin)
         .add_startup_system(setup)
         .add_system(rotate)
         .run();
