@@ -15,10 +15,13 @@ crate-type = ["cdylib"]
 # opt-level = 3
 
 [dependencies]
-three-d = "0.15.0"
+three-d = { version = "0.15.0", features = ["egui-gui"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 console_error_panic_hook = "0.1"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
 
