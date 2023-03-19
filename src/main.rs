@@ -1,6 +1,9 @@
 #[cfg(not(target_arch = "wasm32"))]
+mod simulation;
+#[cfg(not(target_arch = "wasm32"))]
 mod ui;
 
+use crate::simulation::{Dim, SimulationContext};
 use crate::ui::ui;
 use three_d::*;
 
@@ -38,13 +41,15 @@ pub fn main() {
         ),
     );
     model.set_transformation(Mat4::from_scale(0.2));
-    model.set_animation(|time| Mat4::from_angle_y(radians(time * 0.001)));
+    model.set_animation(|time| Mat4::from_angle_y(radians(time * 0.0001)));
 
     let light = DirectionalLight::new(&context, 1.0, Color::WHITE, &vec3(0.0, -0.5, -0.5));
 
     let mut gui = three_d::GUI::new(&context);
 
     let mut roataion_speed = 1.0;
+
+    let mut sim = SimulationContext::new(3, 5, 7, 10, Dim::D4);
 
     let mut last_fps_update = 0u32;
     let mut last_fps = String::new();
@@ -70,6 +75,7 @@ pub fn main() {
                     &mut roataion_speed,
                     &last_fps,
                     frame_input.elapsed_time,
+                    &mut sim,
                 );
 
                 panel_width = ctx.used_rect().width() as f64;

@@ -1,5 +1,8 @@
 #[cfg(target_arch = "wasm32")]
 mod main;
+#[cfg(target_arch = "wasm32")]
+mod simulation;
+#[cfg(target_arch = "wasm32")]
 mod ui;
 
 #[cfg(target_arch = "wasm32")]
