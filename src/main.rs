@@ -1,5 +1,6 @@
 mod simulation;
 mod ui;
+mod widgets;
 
 use crate::simulation::{Dim, SimulationContext};
 use crate::ui::ui;
