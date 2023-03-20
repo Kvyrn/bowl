@@ -4,6 +4,7 @@ mod widgets;
 
 use crate::simulation::{Dim, SimulationContext};
 use crate::ui::ui;
+use std::fmt::Write;
 use three_d::*;
 
 const FPS_UPDATE_RATE: u32 = 10;
@@ -46,16 +47,21 @@ pub fn main() {
 
     let mut gui = three_d::GUI::new(&context);
 
-    let mut roataion_speed = 1.0;
-
     let mut sim = SimulationContext::new(3, 5, 7, 10, Dim::D4);
+    let mut roataion_speed = 1.0;
 
     let mut last_fps_update = 0u32;
     let mut last_fps = String::new();
     window.render_loop(move |mut frame_input| {
         last_fps_update += 1;
         if last_fps_update >= FPS_UPDATE_RATE {
-            last_fps = format!("FPS: {:.0}", 1000.0 / frame_input.elapsed_time);
+            last_fps.clear();
+            write!(
+                &mut last_fps,
+                "FPS: {:.0}",
+                1000.0 / frame_input.elapsed_time
+            )
+            .expect("Nothing can fail writing to a string");
             last_fps_update = 0;
         }
 

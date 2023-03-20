@@ -3,7 +3,7 @@ use three_d::egui::*;
 fn fraction_bar_widget(ui: &mut Ui, fill: f32, color: Color32) -> Response {
     let height = ui.spacing().interact_size.y;
 
-    let (rect, response) = ui.allocate_at_least(vec2(96.0, height), Sense::hover());
+    let (mut rect, response) = ui.allocate_at_least(vec2(96.0, height), Sense::hover());
 
     if ui.is_rect_visible(rect) {
         let animated_fill = ui
@@ -17,9 +17,8 @@ fn fraction_bar_widget(ui: &mut Ui, fill: f32, color: Color32) -> Response {
         ui.painter()
             .rect_filled(rect, radius, Color32::from_gray(50));
         // Fill
-        let mut fill_rect = rect.clone();
-        fill_rect.set_width(width);
-        ui.painter().rect_filled(fill_rect, radius, color);
+        rect.set_width(width);
+        ui.painter().rect_filled(rect, radius, color);
     }
     response
 }
