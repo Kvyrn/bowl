@@ -8,7 +8,7 @@ fn fraction_bar_widget(ui: &mut Ui, fill: f32, color: Color32) -> Response {
     if ui.is_rect_visible(rect) {
         let animated_fill = ui
             .ctx()
-            .animate_value_with_time(response.id, fill.min(1.0), 0.2);
+            .animate_value_with_time(response.id, fill.min(1.0), 0.5);
 
         let width = rect.width() * animated_fill;
         let radius = 0.1 * rect.height();

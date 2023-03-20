@@ -15,9 +15,7 @@ pub fn main() {
         ..Default::default()
     })
     .unwrap();
-
     let context = window.gl();
-
     let mut camera = Camera::new_perspective(
         window.viewport(),
         vec3(0.0, 1.0, 2.0),
@@ -42,9 +40,7 @@ pub fn main() {
     );
     model.set_transformation(Mat4::from_scale(0.2));
     model.set_animation(|time| Mat4::from_angle_y(radians(time * 0.0001)));
-
     let light = DirectionalLight::new(&context, 1.0, Color::WHITE, &vec3(0.0, -0.5, -0.5));
-
     let mut gui = three_d::GUI::new(&context);
 
     let mut sim = SimulationContext::new(3, 5, 7, 10, Dim::D4);
@@ -52,6 +48,7 @@ pub fn main() {
 
     let mut last_fps_update = 0u32;
     let mut last_fps = String::new();
+
     window.render_loop(move |mut frame_input| {
         last_fps_update += 1;
         if last_fps_update >= FPS_UPDATE_RATE {
@@ -95,7 +92,6 @@ pub fn main() {
             height: frame_input.viewport.height,
         };
         camera.set_viewport(viewport);
-
         frame_input
             .screen()
             .clear(ClearState::color_and_depth(0.05, 0.0, 0.1, 1.0, 1.0))

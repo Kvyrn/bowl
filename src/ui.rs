@@ -9,27 +9,25 @@ pub fn ui(
     elapsed_time: f64,
     sim: &mut SimulationContext,
 ) {
-    SidePanel::left("side_panel")
-        .min_width(500.0)
-        .show(ctx, |ui| {
-            ui.vertical_centered(|ui| {
-                ui.label(
-                    RichText::new("Bowl")
-                        .strong()
-                        .size(25.0)
-                        .color(Color32::DARK_GREEN),
-                );
-            });
-            ui.separator();
-
-            simulation_section(ui, sim);
-            visual_section(ui, rotation_speed);
-
-            TopBottomPanel::bottom("diagnostics").show_inside(ui, |ui| {
-                ui.label(format!("Frame time: {:.2}", elapsed_time));
-                ui.label(last_fps);
-            });
+    SidePanel::left("side_panel").show(ctx, |ui| {
+        ui.vertical_centered(|ui| {
+            ui.label(
+                RichText::new("Bowl")
+                    .strong()
+                    .size(25.0)
+                    .color(Color32::DARK_GREEN),
+            );
         });
+        ui.separator();
+
+        simulation_section(ui, sim);
+        visual_section(ui, rotation_speed);
+
+        TopBottomPanel::bottom("diagnostics").show_inside(ui, |ui| {
+            ui.label(format!("Frame time: {:.2}", elapsed_time));
+            ui.label(last_fps);
+        });
+    });
 }
 
 fn simulation_section(ui: &mut Ui, sim: &mut SimulationContext) {
@@ -44,6 +42,7 @@ fn simulation_section(ui: &mut Ui, sim: &mut SimulationContext) {
             sim.state.dim1_fill as f32 / sim.dim1_size as f32,
             Color32::BLUE,
         ));
+        ui.label(format!("{}/{}", sim.state.dim1_fill, sim.dim1_size));
         ui.end_row();
 
         ui.label(RichText::new("Dim 2").color(Color32::DARK_GREEN));
@@ -52,6 +51,7 @@ fn simulation_section(ui: &mut Ui, sim: &mut SimulationContext) {
             sim.state.dim2_fill as f32 / sim.dim2_size as f32,
             Color32::DARK_GREEN,
         ));
+        ui.label(format!("{}/{}", sim.state.dim2_fill, sim.dim2_size));
         ui.end_row();
 
         ui.label(RichText::new("Dim 3").color(Color32::RED));
@@ -60,6 +60,7 @@ fn simulation_section(ui: &mut Ui, sim: &mut SimulationContext) {
             sim.state.dim3_fill as f32 / sim.dim3_size as f32,
             Color32::RED,
         ));
+        ui.label(format!("{}/{}", sim.state.dim3_fill, sim.dim3_size));
         ui.end_row();
 
         ui.label(RichText::new("Dim 4").color(Color32::YELLOW));
@@ -68,6 +69,7 @@ fn simulation_section(ui: &mut Ui, sim: &mut SimulationContext) {
             sim.state.dim4_fill as f32 / sim.dim4_size as f32,
             Color32::YELLOW,
         ));
+        ui.label(format!("{}/{}", sim.state.dim4_fill, sim.dim4_size));
         ui.end_row();
     });
     Grid::new("simulation_use").show(ui, |ui| {
